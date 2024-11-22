@@ -58,6 +58,7 @@ delay=1000
 |**控制键**|​`Esc`​, `Tab`​, `Caps`​, `Space`​, `Enter`​, `Bksp`​|Escape, Tab, 大写锁定，空格，回车，退格键|
 |**编辑键**|​`Ins`​, `Del`​, `Home`​, `End`​, `PgUp`​, `PgDn`​|插入，删除，主页，结束，向上翻页，向下翻页|
 |**标点符号键**|​`SColon`​, `Plus`​, `Comma`​, `Minus`​, `Dot`​, `Slash`​, `Tilde`​, `LBrack`​, `Bslash`​, `RBrack`​, `Quote`​|各种标点符号，如 ; + , - . / ~ [ \\ ] '|
+|**多媒体键**|`MediaNext`, `MediaPrev`, `MediaStop`, `MediaPlayPause`, `VolumeMute`, `VolumeUp`, `VolumeDown`|多媒体键|
 |**特殊键**|​`PrtSc`​, `Scroll`​, `Pause`​, `Menu`​|Print Screen, Scroll Lock, Pause, 应用菜单键|
 
 ## 🙏 鸣谢

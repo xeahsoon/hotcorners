@@ -61,6 +61,12 @@ std::map<std::string, WORD> keyMap = {
     {"Tilde", VK_OEM_3}, {"LBrack", VK_OEM_4}, {"Bslash", VK_OEM_5},
     {"RBrack", VK_OEM_6}, {"Quote", VK_OEM_7},
 
+    // Multimedia keys
+    {"MediaNext", VK_MEDIA_NEXT_TRACK}, {"MediaPrev", VK_MEDIA_PREV_TRACK},
+    {"MediaStop", VK_MEDIA_STOP}, {"MediaPlayPause", VK_MEDIA_PLAY_PAUSE},
+    {"VolumeMute", VK_VOLUME_MUTE}, {"VolumeUp", VK_VOLUME_UP}, 
+    {"VolumeDown", VK_VOLUME_DOWN},
+
     // Other special keys
     {"PrtSc", VK_SNAPSHOT}, {"Scroll", VK_SCROLL}, {"Pause", VK_PAUSE},
     {"Menu", VK_APPS}  // Application Menu (context menu)
