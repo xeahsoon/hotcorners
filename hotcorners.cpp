@@ -5,10 +5,11 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <atomic>
 
 // Constants
 const int HOT_CORNER_OFFSET = 20;       // Corner offset for trigger
-const int DEFAULT_ACTION_DELAY = 80;         // Default action delay in milliseconds
+const int DEFAULT_ACTION_DELAY = 60;         // Default action delay in milliseconds
 const std::string CONFIG_FILE = "hotcorners.ini";  // Configuration file path
 
 // Key mapping table
@@ -164,9 +165,6 @@ void LoadConfig() {
 
 // Execute either a key sequence or a command based on the action type
 void ExecuteCornerAction(const CornerAction& action) {
-    if (action.delay > 0) {
-        Sleep(action.delay);
-    }
     std::cout << "Executing action: " << action.content << std::endl;
 
     if (action.type == "hotkey") {
@@ -189,6 +187,10 @@ const RECT hotCorners[4] = {
       GetSystemMetrics(SM_CYSCREEN) + HOT_CORNER_OFFSET }
 };
 
+// Counter and state variables for hot corners
+std::atomic<int> counter[4] = {};
+std::atomic<bool> activated[4] = {};
+
 // Hot corner handling thread
 DWORD WINAPI CornerHotFunc(LPVOID lpParam) {
     int corner = (int)(intptr_t)lpParam;
@@ -199,30 +201,34 @@ DWORD WINAPI CornerHotFunc(LPVOID lpParam) {
         case 2: action = hotCornerConfig.bottomLeft; break;
         case 3: action = hotCornerConfig.bottomRight; break;
     }
-    if (!action.content.empty()) {
+    int cnt = counter[corner];
+    if (action.delay > 0) {
+        Sleep(action.delay);
+    }
+    // Check the counter and execute the action if not interrupted
+    if (cnt == counter[corner] && !action.content.empty()) {
         ExecuteCornerAction(action);
     }
     return 0;
 }
 
-HANDLE cornerThreads[4] = { NULL };
-
 // Mouse hook callback with state and thread management
 static LRESULT CALLBACK MouseHookCallback(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode >= 0 && wParam == WM_MOUSEMOVE) {
         MSLLHOOKSTRUCT* evt = (MSLLHOOKSTRUCT*)lParam;
-        
+        // Check each corner for mouse position
         for (int i = 0; i < 4; ++i) {
-            if (PtInRect(&hotCorners[i], evt->pt)) {
-                // If mouse enters the corner and no active thread, create a thread
-                if (cornerThreads[i] == NULL) {
-                    cornerThreads[i] = CreateThread(NULL, 0, CornerHotFunc, (LPVOID)(intptr_t)i, 0, NULL);
+            bool active = PtInRect(&hotCorners[i], evt->pt);
+            if (active && !activated[i]) {
+                HANDLE handle = CreateThread(NULL, 0, CornerHotFunc, (LPVOID)(intptr_t)i, 0, NULL);
+                if (handle != NULL) {
+                    CloseHandle(handle);
                 }
-            } else if (cornerThreads[i] != NULL) {
-                TerminateThread(cornerThreads[i], 0);
-                CloseHandle(cornerThreads[i]);
-                cornerThreads[i] = NULL;
             }
+            if (!active && activated[i]) {
+                counter[i] = (counter[i] + 1) % 10000;
+            }
+            activated[i] = active;
         }
     }
     return CallNextHookEx(NULL, nCode, wParam, lParam);
