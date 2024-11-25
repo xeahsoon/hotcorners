@@ -1,3 +1,5 @@
+English | [简体中文](README_zh_CN.md) 
+
 # Hotcorners
 
 ## 💡 Introduction
@@ -14,7 +16,7 @@ Modify the `hotcorners.ini`​ file to customize hot corner actions. Here is a s
 ```ini
 [TopLeft]
 type=hotkey
-content=Ctrl+Win+Left
+content=Ctrl+Alt,Ctrl+Win+Left
 
 [TopRight]
 type=hotkey
@@ -70,3 +72,4 @@ This table organizes the keys into categories to make it easier to identify thei
 Inspired by:
 
 * [https://github.com/taviso/hotcorner](https://github.com/taviso/hotcorner)
+* [https://github.com/xeahsoon/hotkeys](https://github.com/xeahsoon/hotkeys)

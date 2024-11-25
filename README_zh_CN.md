@@ -1,3 +1,5 @@
+[English](README.md) | 简体中文 
+
 # Hotcorners
 
 ## 💡 简介
@@ -14,7 +16,7 @@
 ```ini
 [TopLeft]
 type=hotkey
-content=Ctrl+Win+Left
+content=Ctrl+Alt,Ctrl+Win+Left
 
 [TopRight]
 type=hotkey
@@ -66,3 +68,4 @@ delay=1000
 灵感来源：
 
 * [https://github.com/taviso/hotcorner](https://github.com/taviso/hotcorner)
+* [https://github.com/xeahsoon/hotkeys](https://github.com/xeahsoon/hotkeys)
